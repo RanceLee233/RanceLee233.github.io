@@ -1,17 +1,15 @@
 name: build Gmeek
 
 on:
-  workflow_dispatch:
-  issues:
-    types: [opened, edited]
-  schedule:
-    - cron: "0 16 * * *"
-    
+  push:
+    branches:
+      - main   # 或者你实际的默认分支，比如 master
+
 jobs:
   build:
     name: Generate blog
     runs-on: ubuntu-20.04
-    if: ${{ github.event.repository.owner.id == github.event.sender.id || github.event_name == 'schedule' }}
+    if: ${{ github.event.repository.owner.id == github.event.sender.id }}
     permissions: write-all
     steps:
       - name: Checkout
@@ -23,9 +21,9 @@ jobs:
 
       - name: Get config.json
         run: |
-          echo "====== check config.josn file ======"
+          echo "====== check config.json file ======"
           cat config.json
-          echo "====== check config.josn end  ======"
+          echo "====== check config.json end  ======"
           sudo apt-get install jq
 
       - name: Set up Python
@@ -53,8 +51,8 @@ jobs:
           python Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} --issue_number '${{ github.event.issue.number }}'
           cp -a /opt/Gmeek/docs ${{ github.workspace }} 
           cp -a /opt/Gmeek/backup ${{ github.workspace }} 
-          cp /opt/Gmeek/blogBase.json ${{ github.workspace }} 
-          
+          cp /opt/Gmeek/blogBase.json ${{ github.workspace }}
+
       - name: update html
         run: |
           git config --local user.email "$(jq -r ".email" config.json)"
@@ -63,12 +61,12 @@ jobs:
           git commit -a -m '🎉auto update by Gmeek action' || echo "nothing to commit"
           git push || echo "nothing to push"
           sleep 3
-          
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'docs/.'
-          
+
   deploy:
     name: Deploy blog
     runs-on: ubuntu-20.04
