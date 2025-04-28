@@ -3,12 +3,12 @@ name: build Gmeek
 on:
   push:
     branches:
-      - main   # 或者你实际的默认分支，比如 master
+      - main  # 注意：如果你的默认分支是 master，这里改成 master
 
 jobs:
   build:
     name: Generate blog
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ github.event.repository.owner.id == github.event.sender.id }}
     permissions: write-all
     steps:
@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "====== check config.json file ======"
           cat config.json
-          echo "====== check config.json end  ======"
+          echo "====== check config.json end ======"
           sudo apt-get install jq
 
       - name: Set up Python
@@ -69,7 +69,7 @@ jobs:
 
   deploy:
     name: Deploy blog
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: build
     permissions:
       contents: write
