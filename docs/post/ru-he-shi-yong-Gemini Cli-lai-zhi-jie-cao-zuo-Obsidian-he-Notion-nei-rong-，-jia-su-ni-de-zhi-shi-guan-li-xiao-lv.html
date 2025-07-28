@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
+    
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/139732299?v=4"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="
+主题类别/链接：[[输出]]、[[教程存档]]
+
+# 前言
+近期谷歌推出了Gemini Cli，可以直接在终端上运行AI。">
+<meta property="og:title" content="如何使用Gemini Cli来直接操作Obsidian和Notion内容，加速你的知识管理效率">
+<meta property="og:description" content="
+主题类别/链接：[[输出]]、[[教程存档]]
+
+# 前言
+近期谷歌推出了Gemini Cli，可以直接在终端上运行AI。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://RanceLee233.github.io/post/ru-he-shi-yong-Gemini%20Cli-lai-zhi-jie-cao-zuo-Obsidian-he-Notion-nei-rong-%EF%BC%8C-jia-su-ni-de-zhi-shi-guan-li-xiao-lv.html">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/139732299?v=4">
+<title>如何使用Gemini Cli来直接操作Obsidian和Notion内容，加速你的知识管理效率</title>
+
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">如何使用Gemini Cli来直接操作Obsidian和Notion内容，加速你的知识管理效率</h1>
+<div class="title-right">
+    <a href="https://RanceLee233.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/RanceLee233/RanceLee233.github.io/issues/14" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><p>主题类别/链接：[[输出]]、[[教程存档]]</p>
+<h1>前言</h1>
+<p>近期谷歌推出了Gemini Cli，可以直接在终端上运行AI。作为电脑小白的我之前几乎没有接触过终端和命令行。但是在AI的帮助和一段时间的运用后，我发现在终端中运行AI相比客户端或者浏览器有独特的优势，尤其是对于知识管理来说：</p>
+<ol>
+<li>之前我们和AI交互内容，必须把内容粘贴进去或者上传文件，修改后再重新粘贴回来，十分的麻烦。而终端可以直接在本地文件夹运行，直接修改你的文件，免去来回粘贴的烦恼。这一点对Obsidian用户来说特别友好</li>
+<li>Gemini Cli可以连接Notion MCP，让AI来帮你查询、修改Notion中的文件。用户再也不用手动设计模板、关联内容和写公式了。你只要把自己的需求告诉他就可以了</li>
+<li>结合以上两点，不管是本地的Obsidian还是云端的Notion，都可以用Gemini Cli来协助。如果你也用这两款软件，希望这篇文章能帮助你</li>
+</ol>
+<h1>如何安装及使用Gemini Cli</h1>
+<h2>关于Gemini Cli你需要知道的知识</h2>
+<ol>
+<li>Gemini是谷歌推出的AI，由于众所周知的原因，你需要自己会翻墙及有谷歌账号</li>
+<li>普通用户，每天可以通过Gemini Cli免费调用顶尖的Gemini-2.5-pro 1000次，对于个人用户来说基本上用不完</li>
+</ol>
+<h2>具体安装过程</h2>
+<p>由于我主要用的是Macbook，因此只介绍Mac系统上的安装方法：</p>
+<ol>
+<li>打开你的终端，具体方法是点击屏幕右上角的放大镜，然后输入“terminal”<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/0a854f386377586e647053acdaa546be8129a0a4a8c78dc4c6aedda872749229/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313831646130616363356666346561343234396434373735353233623235646562612e77656270"><img src="https://camo.githubusercontent.com/0a854f386377586e647053acdaa546be8129a0a4a8c78dc4c6aedda872749229/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313831646130616363356666346561343234396434373735353233623235646562612e77656270" alt="202507181da0acc5ff4ea4249d4775523b25deba|image-1|600x95" data-canonical-src="https://cf-img.discoverlabs.ac.cn/202507181da0acc5ff4ea4249d4775523b25deba.webp" style="max-width: 100%;"></a></li>
+<li>在打开的界面中输入代码（如果有报错，你可以直接复制到现有的AI里面去问问）</li>
+</ol>
+<pre class="notranslate"><code class="notranslate">npx https://github.com/google-gemini/gemini-cli
+</code></pre>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/ee8367ac85dab88c90b7d41de8b6c733f778cd05f2d6b305985a08b7a45a7e38/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313862646537363130663431613863363930653134323835316666353765626562642e77656270"><img src="https://camo.githubusercontent.com/ee8367ac85dab88c90b7d41de8b6c733f778cd05f2d6b305985a08b7a45a7e38/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313862646537363130663431613863363930653134323835316666353765626562642e77656270" alt="20250718bde7610f41a8c690e142851ff57ebebd|image-2|573x345" data-canonical-src="https://cf-img.discoverlabs.ac.cn/20250718bde7610f41a8c690e142851ff57ebebd.webp" style="max-width: 100%;"></a><br>
+3. 安装完成后，再次打开终端，输入Gemini就可以启动它（注意部分用户不仅需要梯子，还需要虚拟网卡）<br>
+4. 第一次登录需要授权，直接按回车在跳出来的网页登录你的谷歌账号即可<br>
+5. 当出现这个界面后，你就可以输入和AI聊天了，聊天中AI有时候会和你要授权，我一般全部无脑Yes<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/f5ea9c05bb4c258295c89040a8f3d124b22adc08fc0e2b5b44981021863cf93f/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313839623166623564633937653263663335613234613337366636356336653364332e77656270"><img src="https://camo.githubusercontent.com/f5ea9c05bb4c258295c89040a8f3d124b22adc08fc0e2b5b44981021863cf93f/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313839623166623564633937653263663335613234613337366636356336653364332e77656270" alt="202507189b1fb5dc97e2cf35a24a376f65c6e3d3|image-3|976x539" data-canonical-src="https://cf-img.discoverlabs.ac.cn/202507189b1fb5dc97e2cf35a24a376f65c6e3d3.webp" style="max-width: 100%;"></a></p>
+<h1>如何用Gemini Cli管理Obsidian或其它本地文件</h1>
+<h2>如何进入存放Markdown文件的地址</h2>
+<p>如果你是直接打开终端进入Gemini Cli，那么你会在根目录。但是我们的很多Obsidian文件都在特定的目录，这时候就需要你告诉终端你要去那个目录运行AI，以下是具体步骤：</p>
+<ol>
+<li>打开你存放文件的文件夹，在下方右键文件夹选择在终端中打开<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/d91f5716915fdb8d698ee51c80a8625e1e2db00bc5b992a8830d4211b6ef75cf/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313836376262616135656161313133323432656338353138386430626338333966622e77656270"><img src="https://camo.githubusercontent.com/d91f5716915fdb8d698ee51c80a8625e1e2db00bc5b992a8830d4211b6ef75cf/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313836376262616135656161313133323432656338353138386430626338333966622e77656270" alt="image-2|1257x848" data-canonical-src="https://cf-img.discoverlabs.ac.cn/2025071867bbaa5eaa113242ec85188d0bc839fb.webp" style="max-width: 100%;"></a></li>
+<li>当打开的终端左下角显示你要打开的文件夹，就说明你来对地方了<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/3f2f4495fabd8e1e7870e48935fbcc2c6e6a78ae09b46c00043929e075a6213d/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313832313030646530343135303934656662623134366564353932333538363432372e77656270"><img src="https://camo.githubusercontent.com/3f2f4495fabd8e1e7870e48935fbcc2c6e6a78ae09b46c00043929e075a6213d/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313832313030646530343135303934656662623134366564353932333538363432372e77656270" alt="image-3|1170x742" data-canonical-src="https://cf-img.discoverlabs.ac.cn/202507182100de0415094efbb146ed5923586427.webp" style="max-width: 100%;"></a></li>
+<li>然后再输入Gemini，那么你的AI就自动在这个文件夹里面运行了</li>
+</ol>
+<h2>Gemini Cli能帮我们的Obsidian做什么？</h2>
+<p>对于AI来说，markdown格式是十分方便读取和操作的文件，我们可以直接让AI：</p>
+<ol>
+<li>查看文件夹里面有多少文件</li>
+<li>查找提到某个主题/关键字的文件</li>
+<li>直接对文章内容修改</li>
+<li>任何你能做到的操作，AI都能做到<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/1d1e6b30ae995ae2c595bb041414088e85a71b659096fc5af34d21804f4c73f4/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313832323331383135363066313337353466386239643338313133383937343735632e77656270"><img src="https://camo.githubusercontent.com/1d1e6b30ae995ae2c595bb041414088e85a71b659096fc5af34d21804f4c73f4/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313832323331383135363066313337353466386239643338313133383937343735632e77656270" alt="20250718223181560f13754f8b9d38113897475c|image-10|1060x762" data-canonical-src="https://cf-img.discoverlabs.ac.cn/20250718223181560f13754f8b9d38113897475c.webp" style="max-width: 100%;"></a></li>
+</ol>
+<p>具体来说，日常使用中我会让AI：</p>
+<ol>
+<li>让AI直接查看文件，确认里面有没有错别字，有的话直接修改</li>
+<li>把某些内容转换成markdown格式的表格，OB中写表格很麻烦，我们可以让AI直接帮我写</li>
+<li>dataview是很好用的查询和管理插件，但是像我一样的小白根本不会写代码，这时候你就可以要求它在某个文件里面写代码，来帮你查询某些内容</li>
+</ol>
+<h1>如何用Gemini Cli来管理Notion MCP</h1>
+<p>Gemini Cli不仅能管理我们的本地文档，还可以利用MCP来连接我们的Notion，让我们用自然语言直接操作AI来管理Notion</p>
+<h2>如何安装Notion MCP</h2>
+<p>让Gemini来管理Notion，我们需要先安装MCP。用户自己配置MCP服务对大部分人来说都十分麻烦，好在我们可以让AI自己管理自己：</p>
+<ol>
+<li>登录Gemini，然后输入：“查看网址<a href="https://developers.Notion.com/docs/get-started-with-mcp%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BD%BF%E7%94%A8STDIO" rel="nofollow">https://developers.Notion.com/docs/get-started-with-mcp内容，使用STDIO</a> (Local Server)来给我的Gemini Cli 安装Notion MCP”，之后AI就会自己查找安装（注意请在根目录打开终端，也就直接打开终端启动Gemini，不要在别的文件夹里面启动）</li>
+</ol>
+<pre class="notranslate"><code class="notranslate">查看网址https://developers.Notion.com/docs/get-started-with-mcp内容，使用STDIO (Local Server)来给我的Gemini Cli 安装Notion MCP
+</code></pre>
+<ol>
+<li>安装完成后，会跳出来Notion的授权网页，直接授权确认就可以了。之后在Gemini的界面，你可以看到下面提示你已经装了MCP（我装了2个）。而如果你输入命令/MCP再敲回车，能看到你所有安装的MCP。当看到Notion就说明成功了<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/f8f6cb1b690e8a265195fe8c80a22cf418d7da0e9bb73ccec3314dd09158888c/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313835393365386236353239666666353631303263633165663133613964396364612e77656270"><img src="https://camo.githubusercontent.com/f8f6cb1b690e8a265195fe8c80a22cf418d7da0e9bb73ccec3314dd09158888c/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313835393365386236353239666666353631303263633165663133613964396364612e77656270" alt="20250718593e8b6529fff56102cc1ef13a9d9cda|image-11" data-canonical-src="https://cf-img.discoverlabs.ac.cn/20250718593e8b6529fff56102cc1ef13a9d9cda.webp" style="max-width: 100%;"></a></li>
+</ol>
+<h2>Gemini Cli 能帮我们的Notion做什么</h2>
+<p>连接成功后，我们就可以让Gemini Cli来直接操作我们的Notion了，例如让他来查找一篇文章。请注意，指令中一定要说“请用Notion MCP”这几个字，不然有概率AI不知道要调用它。<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/eabd5fbd8cc0d4d4055f1aceae0cef875d070906f6048773f56e98fb2a0c7a24/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313831613433393839386561316166313938373036616333343233643035373138352e77656270"><img src="https://camo.githubusercontent.com/eabd5fbd8cc0d4d4055f1aceae0cef875d070906f6048773f56e98fb2a0c7a24/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313831613433393839386561316166313938373036616333343233643035373138352e77656270" alt="202507181a439898ea1af198706ac3423d057185|image-12" data-canonical-src="https://cf-img.discoverlabs.ac.cn/202507181a439898ea1af198706ac3423d057185.webp" style="max-width: 100%;"></a><br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/a9549940892312413bb4918d87b233831b3cea310b7e0e5ccb98645de99bb7e3/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313862333239316338343263386563613536633232656530326133313430613531372e77656270"><img src="https://camo.githubusercontent.com/a9549940892312413bb4918d87b233831b3cea310b7e0e5ccb98645de99bb7e3/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313862333239316338343263386563613536633232656530326133313430613531372e77656270" alt="20250718b3291c842c8eca56c22ee02a3140a517|image-13" data-canonical-src="https://cf-img.discoverlabs.ac.cn/20250718b3291c842c8eca56c22ee02a3140a517.webp" style="max-width: 100%;"></a></p>
+<p>类似的，我们可以给出更多指令：</p>
+<ol>
+<li>总结概括页面</li>
+<li>直接在文章或者表格中中插入内容</li>
+<li>甚至，我们要求做模板，AI也可以直接帮我们做出来，还能在其中填充公式</li>
+<li>任何你能想到的要求</li>
+</ol>
+<h1>其它</h1>
+<ol>
+<li>如何在终端里面让AI读取图片？有两个方法：
+<ol>
+<li>把图片保存到AI进入的文件夹，直接告诉AI去读取</li>
+<li>截图后复制，然后在终端中按快捷键control+c，不过这个方法AI会在这个文件夹中创建一个隐藏的Gemini文件夹，并且把图片保存在里面，用完后请记得删除<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/5e7d3fbb04e016117735a4cb2080bc8e5f2c791945644573e5ea09a99c337541/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313830373539616261366265383863316437343632316339643436323166366135612e77656270"><img src="https://camo.githubusercontent.com/5e7d3fbb04e016117735a4cb2080bc8e5f2c791945644573e5ea09a99c337541/68747470733a2f2f63662d696d672e646973636f7665726c6162732e61632e636e2f323032353037313830373539616261366265383863316437343632316339643436323166366135612e77656270" alt="202507180759aba6be88c1d74621c9d4621f6a5a|image-14" data-canonical-src="https://cf-img.discoverlabs.ac.cn/202507180759aba6be88c1d74621c9d4621f6a5a.webp" style="max-width: 100%;"></a></li>
+</ol>
+</li>
+<li>更多用法，推荐归藏老师的文章，能学到很多知识：<a href="https://mp.weixin.qq.com/s/Frdf_Gh3Xhvvmw2g-zOolA" rel="nofollow">https://mp.weixin.qq.com/s/Frdf_Gh3Xhvvmw2g-zOolA</a></li>
+<li>一点思考：对于卖Notion模板的创作者，AI出现后这个商业模式可能要走不通了。因为用户可以直接看着你挂出来的模板图片要求AI复刻。虽然中间的数据库、公式不一样，但最终能达到输入和输出符合用户预期，对用户来说没有区别。而如果你连模板图片都不放出来，大概率用户是不会购买的。这也是以后很多创作者会遇到的问题：在AI加持下，盗版或者说复刻的成本和门槛几乎为0，要怎么获取收入呢？</li>
+</ol></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+
+</div>
+    <div id="footer"><div id="footer1">Copyright © <span id="copyrightYear"></span> <a href="https://RanceLee233.github.io">RanceLee的博客</a></div>
+<div id="footer2">
+    <span id="runday"></span><span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a></span>
+</div>
+
+<script>
+var now=new Date();
+document.getElementById("copyrightYear").innerHTML=now.getFullYear();
+
+if("07/11/2024"!=""){
+    var startSite=new Date("07/11/2024");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+}
+</script></div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","RanceLee233/RanceLee233.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
+
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
+
+</script>
+
+
+</html>
